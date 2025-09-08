@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import time
 import random
 import os

@@ -59,4 +59,4 @@ while True:
     ref = db.reference("/crowd")
     ref.set(zone_counts)
     print("Updated:", zone_counts)
-    time.sleep(15)
+    time.sleep(45)

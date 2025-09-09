@@ -23,7 +23,14 @@ router.post("/", async (req, res) => {
 
     // --- IMPROVEMENT 1: Robust Time Calculation ---
     // Use the Date object to correctly handle hour rollovers
-    const lastDate = new Date(`2025-01-01T${lastTimestamp}:00`);
+     // Get today's date in YYYY-MM-DD format
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        
+    const lastDate = new Date(`${dateStr}T${lastTimestamp}:00`);
     const nextDate1 = new Date(lastDate.getTime() + 60000); // Add 1 minute
     const nextDate2 = new Date(lastDate.getTime() + 120000); // Add 2 minutes
 

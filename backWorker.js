@@ -21,6 +21,6 @@ function postUpdate() {
 }
 
 // Run every 15 seconds
-setInterval(postUpdate, 15000);
+setInterval(postUpdate, 45000);
 // Run immediately on start
 postUpdate();

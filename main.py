@@ -27,16 +27,19 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': os.environ.get('FIREBASE_DATABASE_URL')
 })
 
-zones = ["A", "B", "C", "D", "E", "F"]
+
+# Updated zones and movement patterns for zones A-M
+zones = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
 zone_counts = {zone: random.randint(20, 100) for zone in zones}
 
-# Define movement patterns
+# Define movement patterns to cover all zones
 movements = [
-    ["A", "B"],           # Group 1: A -> B
-    ["C", "B", "A", "D"], # Group 2: C -> B -> A -> D
-    ["E", "F", "B"],      # Group 3: E -> F -> B
-    ["D", "C"],           # Group 4: D -> C
-    ["F", "A"],           # Group 5: F -> A
+    ["A", "B", "C", "F", "E", "D"],      # Group 1: left to right, top row
+    ["D", "E", "F", "C", "B", "A"],      # Group 2: right to left, top row
+    ["G", "H", "M", "L", "K", "J", "I"], # Group 3: right region
+    ["I", "J", "K", "L", "M", "H", "G"], # Group 4: right region reverse
+    ["A", "D", "G", "I"],                  # Group 5: left column
+    ["C", "F", "M", "K"],                  # Group 6: right column
 ]
 
 group_positions = [0 for _ in movements]  # Start all groups at their first zone

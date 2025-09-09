@@ -13,6 +13,8 @@ const zoneCoordinates = require('./api/zoneCoordinates');
 const updateSafeLimit = require('./api/updateSafeLimit');
 const getSafeLimit = require('./api/getSafeLimit');
 const getEventLogs = require('./api/getEventLogs');
+
+const eventLayout = require('./api/eventLayout');
 const predictiveAPI = require('./api/gemini');
 
 const app = express();
@@ -41,6 +43,8 @@ app.use('/api/recentZoneCounts', recentZoneCounts);
 app.use('/api/zoneCoordinates', zoneCoordinates);
 app.use('/api/updateSafeLimit', updateSafeLimit);
 app.use('/api/getSafeLimit', getSafeLimit);
+
+app.use('/api/eventLayout', eventLayout);
 app.use('/api/gemini', predictiveAPI);
 
 app.get('/', (req, res) => {

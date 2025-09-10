@@ -36,7 +36,11 @@ router.post('/', async (req, res) => {
     // Get current time in HH:mm format
     const now = new Date();
     const timeStr = now.toTimeString().slice(0, 5);
-    const dateStr = now.toISOString().slice(0, 10);
+    const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
 
     const eventName = req.body.eventName || 'Default Event';
 
@@ -54,6 +58,13 @@ router.post('/', async (req, res) => {
         D: crowdData.D || 0,
         E: crowdData.E || 0,
         F: crowdData.F || 0,
+        G: crowdData.G || 0,
+        H: crowdData.H || 0,
+        I: crowdData.I || 0,
+        J: crowdData.J || 0,
+        K: crowdData.K || 0,
+        L: crowdData.L || 0,
+        M: crowdData.M || 0,
       },
     });
     await eventLog.save();

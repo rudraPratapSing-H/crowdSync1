@@ -30,7 +30,7 @@ firebase_admin.initialize_app(cred, {
 
 # Updated zones and movement patterns for zones A-M
 zones = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
-zone_counts = {zone: random.randint(20, 100) for zone in zones}
+zone_counts = {zone: random.randint(5,50) for zone in zones}
 
 # Define movement patterns to cover all zones
 movements = [

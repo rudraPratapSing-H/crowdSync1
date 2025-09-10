@@ -9,6 +9,13 @@ const zoneLogSchema = new mongoose.Schema({
     D: { type: Number, default: 0 },
     E: { type: Number, default: 0 },
     F: { type: Number, default: 0 },
+    G: { type: Number, default: 0 },
+    H: { type: Number, default: 0 },
+    I: { type: Number, default: 0 },
+    J: { type: Number, default: 0 },
+    K: { type: Number, default: 0 },
+    L: { type: Number, default: 0 },
+    M: { type: Number, default: 0 }
   }
 }, { _id: false });
 

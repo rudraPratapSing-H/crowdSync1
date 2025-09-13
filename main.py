@@ -81,13 +81,36 @@ while True:
     divergence_value = divergence_doc.get("divergence") if divergence_doc else None
     print("Divergence value:", divergence_value)
 
+    # Log the movement if divergence happened
     if divergence_value:
         crowded_zone = max(zone_counts, key=zone_counts.get)
         less_crowded_zone = min(zone_counts, key=zone_counts.get)
         diverting = min(10, zone_counts[crowded_zone])
         zone_counts[crowded_zone] -= diverting
         zone_counts[less_crowded_zone] += diverting
-        print(f"Diverted {diverting} people from {crowded_zone} to {less_crowded_zone}")
+        movement_str = f"Diverted {diverting} people from {crowded_zone} to {less_crowded_zone}"
+        print(movement_str)
+
+        # Log the movement in the 'movements' collection
+        movements_collection = mongo_db["movements"]
+        doc = movements_collection.find_one({"eventName": "Test Event"})
+        if not doc:
+            movements_collection.insert_one({"eventName": "Test Event", "movements": [movement_str]})
+        else:
+            movements_collection.update_one(
+                {"eventName": "Test Event"},
+                {"$push": {"movements": movement_str}}
+            )
+
+        # Log the movement in the 'divergences' collection (replicating the API logic)
+        divergence_doc = collection.find_one({"eventName": "Test Event"})
+        if not divergence_doc:
+            collection.insert_one({"eventName": "Test Event", "movements": [movement_str]})
+        else:
+            collection.update_one(
+                {"eventName": "Test Event"},
+                {"$push": {"movements": movement_str}}
+            )
     # --- Divergence logic ends here ---
 
     ref = db.reference("/crowd")

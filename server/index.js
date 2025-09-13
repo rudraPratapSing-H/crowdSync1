@@ -22,6 +22,7 @@ const predictiveAPI = require('./api/gemini');
 // const volunteerLogin = require('./api/volunteerLogin');
 const events = require('./api/events');
 const divergence = require('./api/divergence');
+const movement = require('./api/movement');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -54,6 +55,7 @@ app.use('/api/eventLayout', eventLayout);
 app.use('/api/gemini', predictiveAPI);
 app.use('/api/events', events);
 app.use('/api/divergence', divergence);
+app.use('/api/movement', movement);
 
 // User auth endpoints
 // app.use('/api/userSignup', userSignup);

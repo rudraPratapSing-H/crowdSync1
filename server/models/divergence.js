@@ -6,7 +6,8 @@ const DivergenceSchema = new mongoose.Schema({
   divergence: {
     type: Boolean,
     default: false
-  }
+  },
+  movements: [{ type: String }]
 });
 
 module.exports = mongoose.model('Divergence', DivergenceSchema);

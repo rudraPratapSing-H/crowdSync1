@@ -6,6 +6,18 @@ import random
 import os
 import firebase_admin
 from firebase_admin import credentials, db
+from pymongo import MongoClient
+
+# Load MongoDB Atlas connection string from environment variable
+MONGODB_URI = os.environ.get("MONGODB_URI")  # e.g. "mongodb+srv://user:pass@cluster.mongodb.net/dbname?retryWrites=true&w=majority"
+DB_NAME = os.environ.get("MONGODB_DB_NAME", "dataBase1")
+COLLECTION_NAME = os.environ.get("MONGODB_COLLECTION_NAME", "divergences")
+
+# MongoDB setup
+mongo_client = MongoClient(MONGODB_URI)
+mongo_db = mongo_client[DB_NAME]
+collection = mongo_db[COLLECTION_NAME]
+
 
 # Load Firebase credentials from environment variables
 firebase_creds = {
@@ -44,6 +56,11 @@ movements = [
 
 group_positions = [0 for _ in movements]  # Start all groups at their first zone
 
+# Fetch and print the value stored in the key 'divergence' for eventName 'Test Event'
+divergence_doc = collection.find_one({"eventName": "Test Event"})
+divergence_value = divergence_doc.get("divergence") if divergence_doc else None
+print("Divergence value:", divergence_value)
+
 while True:
     # Move each group along its path
     for i, path in enumerate(movements):
@@ -59,7 +76,21 @@ while True:
 
         group_positions[i] = next_pos
 
+    # --- Divergence logic starts here ---
+    divergence_doc = collection.find_one({"eventName": "Test Event"})
+    divergence_value = divergence_doc.get("divergence") if divergence_doc else None
+    print("Divergence value:", divergence_value)
+
+    if divergence_value:
+        crowded_zone = max(zone_counts, key=zone_counts.get)
+        less_crowded_zone = min(zone_counts, key=zone_counts.get)
+        diverting = min(10, zone_counts[crowded_zone])
+        zone_counts[crowded_zone] -= diverting
+        zone_counts[less_crowded_zone] += diverting
+        print(f"Diverted {diverting} people from {crowded_zone} to {less_crowded_zone}")
+    # --- Divergence logic ends here ---
+
     ref = db.reference("/crowd")
     ref.set(zone_counts)
     print("Updated:", zone_counts)
-    time.sleep(45)
+    time.sleep(5)

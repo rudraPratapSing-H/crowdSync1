@@ -5,6 +5,7 @@ const SafeLimit = require('../models/safeLimit');
 // GET /api/safeLimit?eventName=...&date=...
 router.get('/', async (req, res) => {
   const { eventName, date } = req.query;
+  
   if (!eventName || !date) {
     return res.status(400).json({ error: 'eventName and date are required as query parameters.' });
   }

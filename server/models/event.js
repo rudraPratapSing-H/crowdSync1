@@ -1,18 +1,8 @@
 const mongoose = require('mongoose');
-
-const EventSchema = new mongoose.Schema({
-  eventname: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  name: {
+const heads = new mongoose.Schema({
+  attendeeName: {
     type: String,
     required: true  
-  },
-  date: {
-    type: Date,
-    required: true
   },
   url: {
     type: String,
@@ -22,6 +12,24 @@ const EventSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+   createdAt: {
+    type: Date,
+    default: Date.now
+  }
+
+})
+const EventSchema = new mongoose.Schema({
+  eventname: {
+    type: String,
+    required: true
+  },
+  
+  date: {
+    type: Date,
+    required: true
+  },
+  heads: [heads],
+  
   createdAt: {
     type: Date,
     default: Date.now
